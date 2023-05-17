@@ -148,16 +148,16 @@ class GameEngine:
                 self._player_c_v.vel.x += self.player_cfg["input_velocity"]
             elif c_input.phase == CommandPhase.END:
                 self._player_c_v.vel.x -= self.player_cfg["input_velocity"]
-        if c_input.name == "PLAYER_UP":
-            if c_input.phase == CommandPhase.START:
-                self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
-            elif c_input.phase == CommandPhase.END:
-                self._player_c_v.vel.y += self.player_cfg["input_velocity"]
-        if c_input.name == "PLAYER_DOWN":
-            if c_input.phase == CommandPhase.START:
-                self._player_c_v.vel.y += self.player_cfg["input_velocity"]
-            elif c_input.phase == CommandPhase.END:
-                self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
+        # if c_input.name == "PLAYER_UP":
+        #     if c_input.phase == CommandPhase.START:
+        #         self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
+        #     elif c_input.phase == CommandPhase.END:
+        #         self._player_c_v.vel.y += self.player_cfg["input_velocity"]
+        # if c_input.name == "PLAYER_DOWN":
+        #     if c_input.phase == CommandPhase.START:
+        #         self._player_c_v.vel.y += self.player_cfg["input_velocity"]
+        #     elif c_input.phase == CommandPhase.END:
+        #         self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
 
         if c_input.name == "PLAYER_FIRE" and self.num_bullets < self.level_01_cfg["player_spawn"]["max_bullets"]:
             if not self.is_paused:
