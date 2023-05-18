@@ -50,6 +50,7 @@ class GameEngine:
 
         self.num_bullets = 0
         self.is_paused = False
+        self.is_started = True
 
     def _load_config_files(self):
         with open("assets/cfg/window.json", encoding="utf-8") as window_file:
@@ -71,20 +72,21 @@ class GameEngine:
         while self.is_running:
             self._calculate_time()
             self._process_events()
-            if not self.is_paused:
+            if not self.is_paused and self.is_started:
                 self._update()
             self._draw()
             await asyncio.sleep(0)
         self._clean()
 
     def _create(self):
-        self._player_entity = create_player_square(self.ecs_world, self.player_cfg, self.level_01_cfg["player_spawn"])
-        self._player_c_v = self.ecs_world.component_for_entity(self._player_entity, CVelocity)
-        self._player_c_t = self.ecs_world.component_for_entity(self._player_entity, CTransform)
-        self._player_c_s = self.ecs_world.component_for_entity(self._player_entity, CSurface)
+        if self.is_started:
+            self._player_entity = create_player_square(self.ecs_world, self.player_cfg, self.level_01_cfg["player_spawn"])
+            self._player_c_v = self.ecs_world.component_for_entity(self._player_entity, CVelocity)
+            self._player_c_t = self.ecs_world.component_for_entity(self._player_entity, CTransform)
+            self._player_c_s = self.ecs_world.component_for_entity(self._player_entity, CSurface)
 
-        create_enemy_spawner(self.ecs_world, self.level_01_cfg)
-        create_input_player(self.ecs_world)
+            create_enemy_spawner(self.ecs_world, self.level_01_cfg)
+            create_input_player(self.ecs_world)
         create_text(self.ecs_world,
                     "Controles: Flechas, click normal, click derecho con balas en el mundo.",
                     pygame.Vector2(5, 25),
@@ -121,7 +123,10 @@ class GameEngine:
         system_explosion_kill(self.ecs_world)
 
         system_player_state(self.ecs_world)
-        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeHunter"])
+        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeA"])
+        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeB"])
+        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeC"])
+        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeD"])
 
         system_animation(self.ecs_world, self.delta_time)
 
@@ -148,16 +153,6 @@ class GameEngine:
                 self._player_c_v.vel.x += self.player_cfg["input_velocity"]
             elif c_input.phase == CommandPhase.END:
                 self._player_c_v.vel.x -= self.player_cfg["input_velocity"]
-        # if c_input.name == "PLAYER_UP":
-        #     if c_input.phase == CommandPhase.START:
-        #         self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
-        #     elif c_input.phase == CommandPhase.END:
-        #         self._player_c_v.vel.y += self.player_cfg["input_velocity"]
-        # if c_input.name == "PLAYER_DOWN":
-        #     if c_input.phase == CommandPhase.START:
-        #         self._player_c_v.vel.y += self.player_cfg["input_velocity"]
-        #     elif c_input.phase == CommandPhase.END:
-        #         self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
 
         if c_input.name == "PLAYER_FIRE" and self.num_bullets < self.level_01_cfg["player_spawn"]["max_bullets"]:
             if not self.is_paused:

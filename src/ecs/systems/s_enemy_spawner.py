@@ -13,11 +13,12 @@ def system_enemy_spawner(world: esper.World, enemies_data: dict, delta_time: flo
         for spw_evt in c_spw.spawn_event_data:
             if c_spw.current_time >= spw_evt.time and not spw_evt.triggered:
                 spw_evt.triggered = True
-                if spw_evt.enemy_type == "TypeHunter":
-                    create_enemy_hunter(world,
-                                        spw_evt.position,
-                                        enemies_data[spw_evt.enemy_type])
-                else:
-                    create_enemy_square(world,
-                                        spw_evt.position,
-                                        enemies_data[spw_evt.enemy_type])
+                # if spw_evt.enemy_type == "TypeD":
+                #     create_enemy_square(world,
+                #                         spw_evt.position,
+                #                         enemies_data[spw_evt.enemy_type])
+                # else:
+                create_enemy_hunter(world,
+                                    spw_evt.position,
+                                    enemies_data[spw_evt.enemy_type])
+                    

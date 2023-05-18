@@ -6,7 +6,7 @@ from src.ecs.components.c_surface import CSurface
 def system_animation(world:esper.World, delta_time:float):
     components = world.get_components(CSurface, CAnimation)
     for _, (c_s, c_a) in components:
-        # Dimsinuir el valor de curr_time de la nimacion
+        # Dimsinuir el valor de curr_time de la animacion
         c_a.curr_anim_time -= delta_time
         # Cuando curr_imte <= 0
         if c_a.curr_anim_time <= 0:

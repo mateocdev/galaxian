@@ -54,6 +54,7 @@ def create_enemy_square(world: esper.World, pos: pygame.Vector2, enemy_info: dic
 
 def create_enemy_hunter(world: esper.World, pos: pygame.Vector2, enemy_info: dict):
     enemy_surface = ServiceLocator.images_services.get(enemy_info["image"])
+    enemy_surface = pygame.transform.rotate(enemy_surface, 180)
     velocity = pygame.Vector2(0, 0)
     enemy_entity = create_sprite(world, pos, velocity, enemy_surface)
     world.add_component(enemy_entity, CEnemyHunterState(pos))
@@ -65,14 +66,12 @@ def create_enemy_hunter(world: esper.World, pos: pygame.Vector2, enemy_info: dic
 def create_player_square(world: esper.World, player_info: dict, player_lvl_info: dict) -> int:
     player_sprite = ServiceLocator.images_services.get(player_info["image"])
     size = player_sprite.get_size()
-    size = (size[0] / player_info["animations"]["number_frames"], size[1])
+    #size = (size[0] / player_info["animations"]["number_frames"], size[1])
     pos = pygame.Vector2(player_lvl_info["position"]["x"] - (size[0] / 2),
                          player_lvl_info["position"]["y"] - (size[1] / 2))
     vel = pygame.Vector2(0, 0)
     player_entity = create_sprite(world, pos, vel, player_sprite)    
     world.add_component(player_entity, CTagPlayer())
-    world.add_component(player_entity,
-                        CAnimation(player_info["animations"]))
     world.add_component(player_entity, CPlayerState())
     return player_entity
 
