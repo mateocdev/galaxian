@@ -1,107 +1,11 @@
 {
-    "player_spawn": {
-        "position": {
-            "x": 320,
-            "y": 330
-        },
-        "max_bullets": 4
-    },
-    "enemy_spawn_events": [
-        {
-            "time": 0.0,
-            "enemy_type": "TypeD",
-            "position": {
-                "x": 100,
-                "y": 150
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeD",
-            "position": {
-                "x": 30,
-                "y": 100
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeD",
-            "position": {
-                "x": 40,
-                "y": 180
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeA",
-            "position": {
-                "x": 305,
-                "y": 20
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeA",
-            "position": {
-                "x": 50,
-                "y": 50
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeB",
-            "position": {
-                "x": 300,
-                "y": 60
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeC",
-            "position": {
-                "x": 200,
-                "y": 90
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeD",
-            "position": {
-                "x": 600,
-                "y": 50
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeA",
-            "position": {
-                "x": 90,
-                "y": 180
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeB",
-            "position": {
-                "x": 200,
-                "y": 100
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeC",
-            "position": {
-                "x": 240,
-                "y": 90
-            }
-        },
-        {
-            "time": 0.0,
-            "enemy_type": "TypeD",
-            "position": {
-                "x": 540,
-                "y": 110
-            }
-        }
-    ]
+  "wait_before_next_level": 2.5,
+  "wait_before_enemy_attacks": 1.5,
+  "start_game_sound": "assets/snd/game_start.ogg",
+  "pause_game_sound": "assets/snd/game_paused.ogg",
+  "game_over_sound": "assets/snd/game_over.ogg",
+  "enemy_speed": {
+    "x": 8,
+    "y": 0
+  }
 }

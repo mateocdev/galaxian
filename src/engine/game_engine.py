@@ -4,20 +4,20 @@ import pygame
 import esper
 from src.ecs.systems.s_animation import system_animation
 
-from src.ecs.systems.s_collision_player_enemy import system_collision_player_enemy
-from src.ecs.systems.s_collision_enemy_bullet import system_collision_enemy_bullet
+from src.ecs.systems.play.s_collision_player_enemy import system_collision_player_enemy
+from src.ecs.systems.play.s_collision_enemy_bullet import system_collision_enemy_bullet
 
-from src.ecs.systems.s_enemy_spawner import system_enemy_spawner
-from src.ecs.systems.s_input_player import system_input_player
+from src.ecs.systems.play.s_enemy_spawner import system_enemy_spawner
+from src.ecs.systems.play.s_input_player import system_input_player
 from src.ecs.systems.s_movement import system_movement
-from src.ecs.systems.s_rendering import system_rendering
-from src.ecs.systems.s_screen_bounce import system_screen_bounce
-from src.ecs.systems.s_screen_player import system_screen_player
-from src.ecs.systems.s_screen_bullet import system_screen_bullet
+from src.ecs.systems.play.s_rendering import system_rendering
+from src.ecs.systems.play.s_screen_bounce import system_screen_bounce
+from src.ecs.systems.play.s_screen_player import system_screen_player
+from src.ecs.systems.play.s_screen_bullet import system_screen_bullet
 
-from src.ecs.systems.s_player_state import system_player_state
-from src.ecs.systems.s_explosion_kill import system_explosion_kill
-from src.ecs.systems.s_enemy_hunter_state import system_enemy_hunter_state
+from src.ecs.systems.play.s_player_state import system_player_state
+from src.ecs.systems.play.s_explosion_kill import system_explosion_kill
+from src.ecs.systems.play.s_enemy_hunter_state import system_enemy_hunter_state
 
 from src.ecs.components.c_velocity import CVelocity
 from src.ecs.components.c_transform import CTransform
@@ -80,22 +80,27 @@ class GameEngine:
 
     def _create(self):
         if self.is_started:
-            self._player_entity = create_player_square(self.ecs_world, self.player_cfg, self.level_01_cfg["player_spawn"])
-            self._player_c_v = self.ecs_world.component_for_entity(self._player_entity, CVelocity)
-            self._player_c_t = self.ecs_world.component_for_entity(self._player_entity, CTransform)
-            self._player_c_s = self.ecs_world.component_for_entity(self._player_entity, CSurface)
+            self._player_entity = create_player_square(
+                self.ecs_world, self.player_cfg, self.level_01_cfg["player_spawn"])
+            self._player_c_v = self.ecs_world.component_for_entity(
+                self._player_entity, CVelocity)
+            self._player_c_t = self.ecs_world.component_for_entity(
+                self._player_entity, CTransform)
+            self._player_c_s = self.ecs_world.component_for_entity(
+                self._player_entity, CSurface)
 
             create_enemy_spawner(self.ecs_world, self.level_01_cfg)
             create_input_player(self.ecs_world)
         create_text(self.ecs_world,
                     "Controles: Flechas, click normal, click derecho con balas en el mundo.",
                     pygame.Vector2(5, 25),
-                    pygame.Color(255,255,255),
+                    pygame.Color(255, 255, 255),
                     6)
         create_text(self.ecs_world,
                     "Ejercicio 04",
-                    pygame.Vector2(self.screen.get_rect().centerx - 70, self.screen.get_rect().top + 2),
-                    pygame.Color(255,0,0),
+                    pygame.Vector2(self.screen.get_rect().centerx -
+                                   70, self.screen.get_rect().top + 2),
+                    pygame.Color(255, 0, 0),
                     12)
 
     def _calculate_time(self):
@@ -123,10 +128,14 @@ class GameEngine:
         system_explosion_kill(self.ecs_world)
 
         system_player_state(self.ecs_world)
-        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeA"])
-        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeB"])
-        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeC"])
-        system_enemy_hunter_state(self.ecs_world, self._player_entity, self.enemies_cfg["TypeD"])
+        system_enemy_hunter_state(
+            self.ecs_world, self._player_entity, self.enemies_cfg["TypeA"])
+        system_enemy_hunter_state(
+            self.ecs_world, self._player_entity, self.enemies_cfg["TypeB"])
+        system_enemy_hunter_state(
+            self.ecs_world, self._player_entity, self.enemies_cfg["TypeC"])
+        system_enemy_hunter_state(
+            self.ecs_world, self._player_entity, self.enemies_cfg["TypeD"])
 
         system_animation(self.ecs_world, self.delta_time)
 
@@ -165,7 +174,7 @@ class GameEngine:
                 self._pause_entity = create_text(self.ecs_world,
                                                  "Pausado",
                                                  pygame.Vector2(5, 5),
-                                                 pygame.Color(0,255,0),
+                                                 pygame.Color(0, 255, 0),
                                                  10)
             elif self._pause_entity:
                 self.ecs_world.delete_entity(self._pause_entity)

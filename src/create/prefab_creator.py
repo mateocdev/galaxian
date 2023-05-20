@@ -15,6 +15,7 @@ from src.ecs.components.c_animation import CAnimation
 from src.ecs.components.c_player_state import CPlayerState
 from src.ecs.components.c_enemy_hunter_state import CEnemyHunterState
 from src.engine.service_locator import ServiceLocator
+from src.ecs.components.c_changing_text import CChangingText, TextAlignment
 
 
 def create_square(world: esper.World, size: pygame.Vector2,
@@ -41,7 +42,7 @@ def create_sprite(world: esper.World, pos: pygame.Vector2, vel: pygame.Vector2,
     return sprite_entity
 
 
-def create_enemy_square(world: esper.World, pos: pygame.Vector2, enemy_info: dict):
+""" def create_enemy_square(world: esper.World, pos: pygame.Vector2, enemy_info: dict):
     enemy_surface = ServiceLocator.images_services.get(enemy_info["image"])
     vel_max = enemy_info["velocity_max"]
     vel_min = enemy_info["velocity_min"]
@@ -66,11 +67,11 @@ def create_enemy_hunter(world: esper.World, pos: pygame.Vector2, enemy_info: dic
 def create_player_square(world: esper.World, player_info: dict, player_lvl_info: dict) -> int:
     player_sprite = ServiceLocator.images_services.get(player_info["image"])
     size = player_sprite.get_size()
-    #size = (size[0] / player_info["animations"]["number_frames"], size[1])
+    # size = (size[0] / player_info["animations"]["number_frames"], size[1])
     pos = pygame.Vector2(player_lvl_info["position"]["x"] - (size[0] / 2),
                          player_lvl_info["position"]["y"] - (size[1] / 2))
     vel = pygame.Vector2(0, 0)
-    player_entity = create_sprite(world, pos, vel, player_sprite)    
+    player_entity = create_sprite(world, pos, vel, player_sprite)
     world.add_component(player_entity, CTagPlayer())
     world.add_component(player_entity, CPlayerState())
     return player_entity
@@ -111,7 +112,7 @@ def create_bullet(world: esper.World,
                   player_size: pygame.Vector2,
                   bullet_info: dict):
     bullet_surface = ServiceLocator.images_services.get(bullet_info["image"])
-    
+
     bullet_size = bullet_surface.get_rect().size
     pos = pygame.Vector2(player_pos.x + (player_size[0] / 2) - (bullet_size[0] / 2),
                          player_pos.y + (player_size[1] / 2) - (bullet_size[1] / 2))
@@ -124,7 +125,8 @@ def create_bullet(world: esper.World,
 
 
 def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_info: dict):
-    explosion_surface = ServiceLocator.images_services.get(explosion_info["image"])
+    explosion_surface = ServiceLocator.images_services.get(
+        explosion_info["image"])
     vel = pygame.Vector2(0, 0)
 
     explosion_entity = create_sprite(world, pos, vel, explosion_surface)
@@ -132,15 +134,32 @@ def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_info: di
     world.add_component(explosion_entity,
                         CAnimation(explosion_info["animations"]))
     ServiceLocator.sounds_services.play(explosion_info["sound"])
-    return explosion_entity
+    return explosion_entity """
 
 
-def create_text(world: esper.World, text: str,
-                pos: pygame.Vector2, color: pygame.Color,
-                fontsize: int = 24) -> int:
+def create_text(world: esper.World, txt: str, size: int, color: pygame.Color,
+                pos: pygame.Vector2, alignment: TextAlignment, text_changes: bool) -> int:
+    font = ServiceLocator.fonts_services.get(
+        "./assets/fnt/PressStart2P.ttf", size)
     text_entity = world.create_entity()
     world.add_component(text_entity,
-                        CTransform(pos))
+                        CSurface.from_text(txt, font, color))
+    txt_s = world.component_for_entity(text_entity, CSurface)
+    origin = pygame.Vector2(0, 0)
+    if alignment is TextAlignment.CENTER:
+        origin.x = pygame.Vector2(txt_s.surface.get_width() / 2,
+                                  txt_s.surface.get_height() / 2)
+    elif alignment is TextAlignment.RIGHT:
+        origin.x = pygame.Vector2(txt_s.surface.get_width(),
+                                  txt_s.surface.get_height())
     world.add_component(text_entity,
-                        CSurface.from_text(text, color, fontsize))
+                        CTransform(pos, origin))
+    if text_changes:
+        world.add_component(text_entity,
+                            CChangingText(txt, font, alignment, color))
     return text_entity
+
+
+def create_action(world: esper.World, name: str, key: int):
+    action_entity = world.create_entity()
+    world.add_component(action_entity, CInputCommand(name, key))

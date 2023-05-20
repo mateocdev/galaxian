@@ -1,111 +1,95 @@
 {
-    "TypeA": {
-        "image": "assets/img/invaders_enemy_01.png",
-        "sound": "assets/snd/enemy_launch.ogg",
-        "velocity_min": 25,
-        "velocity_max": 50,
-        "animations": {
-            "number_frames": 5,
-            "list": [
-                {
-                    "name": "MOVE",
-                    "start": 0,
-                    "end": 4,
-                    "framerate": 10
-                },
-                {
-                    "name": "IDLE",
-                    "start": 0,
-                    "end": 0,
-                    "framerate": 1
-                }
-            ]
+  "spawn_point": {
+    "x": 100,
+    "y": 40
+  },
+  "enemy_01": {
+    "image": "assets/img/invaders_enemy_01.png",
+    "animations": {
+      "number_frames": 4,
+      "list": [
+        {
+          "name": "idle",
+          "start": 0,
+          "end": 3,
+          "framerate": 3
         },
-        "velocity_chase": 75,
-        "velocity_return": 100,
-        "distance_start_chase": 100,
-        "distance_start_return": 200,
-        "sound_chase": "assets/snd/enemy_launch.ogg"
+        {
+          "name": "hit",
+          "start": 0,
+          "end": 0,
+          "framerate": 1
+        }
+      ]
     },
-    "TypeB": {
-        "image": "assets/img/invaders_enemy_02.png",
-        "velocity_min": 50,
-        "velocity_max": 75,
-        "animations": {
-            "number_frames": 5,
-            "list": [
-                {
-                    "name": "MOVE",
-                    "start": 0,
-                    "end": 4,
-                    "framerate": 10
-                },
-                {
-                    "name": "IDLE",
-                    "start": 0,
-                    "end": 0,
-                    "framerate": 1
-                }
-            ]
+    "score_value": 10,
+    "score_value_after_hit": 20
+  },
+  "enemy_02": {
+    "image": "assets/img/invaders_enemy_02.png",
+    "animations": {
+      "number_frames": 4,
+      "list": [
+        {
+          "name": "idle",
+          "start": 0,
+          "end": 3,
+          "framerate": 3
         },
-        "velocity_chase": 75,
-        "velocity_return": 100,
-        "distance_start_chase": 100,
-        "distance_start_return": 200,
-        "sound_chase": "assets/snd/enemy_launch.ogg"
+        {
+          "name": "hit",
+          "start": 0,
+          "end": 0,
+          "framerate": 1
+        }
+      ]
     },
-    "TypeC": {
-        "image": "assets/img/invaders_enemy_03.png",
-        "velocity_min": 75,
-        "velocity_max": 100,
-        "animations": {
-            "number_frames": 5,
-            "list": [
-                {
-                    "name": "MOVE",
-                    "start": 0,
-                    "end": 4,
-                    "framerate": 10
-                },
-                {
-                    "name": "IDLE",
-                    "start": 0,
-                    "end": 0,
-                    "framerate": 1
-                }
-            ]
+    "score_value": 30,
+    "score_value_after_hit": 60
+  },
+  "enemy_03": {
+    "image": "assets/img/invaders_enemy_03.png",
+    "animations": {
+      "number_frames": 4,
+      "list": [
+        {
+          "name": "idle",
+          "start": 0,
+          "end": 3,
+          "framerate": 3
         },
-        "velocity_chase": 75,
-        "velocity_return": 100,
-        "distance_start_chase": 100,
-        "distance_start_return": 200,
-        "sound_chase": "assets/snd/enemy_launch.ogg"
+        {
+          "name": "hit",
+          "start": 0,
+          "end": 0,
+          "framerate": 1
+        }
+      ]
     },
-    "TypeD": {
-        "image": "assets/img/invaders_enemy_04.png",
-        "velocity_min": 75,
-        "velocity_max": 100,
-        "animations": {
-            "number_frames": 1,
-            "list": [
-                {
-                    "name": "MOVE",
-                    "start": 0,
-                    "end": 0,
-                    "framerate": 10
-                },
-                {
-                    "name": "IDLE",
-                    "start": 0,
-                    "end": 0,
-                    "framerate": 1
-                }
-            ]
+    "score_value": 50,
+    "score_value_after_hit": 100
+  },
+  "enemy_04": {
+    "image": "assets/img/invaders_enemy_04.png",
+    "animations": {
+      "number_frames": 4,
+      "list": [
+        {
+          "name": "idle",
+          "start": 0,
+          "end": 3,
+          "framerate": 3
         },
-        "velocity_chase": 75,
-        "velocity_return": 100,
-        "distance_start_chase": 100,
-        "distance_start_return": 200,
-        "sound_chase": "assets/snd/enemy_launch.ogg"
-    }
+        {
+          "name": "hit",
+          "start": 0,
+          "end": 0,
+          "framerate": 1
+        }
+      ]
+    },
+    "score_value": 100,
+    "score_value_after_hit": 200
+  },
+  "launch_sound": "assets/snd/enemy_launch.ogg"
 }

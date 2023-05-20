@@ -1,0 +1,33 @@
+{
+  "player": {
+    "size": {
+      "w": 0.5,
+      "h": 2
+    },
+    "velocity": {
+      "x": 0,
+      "y": -500
+    },
+    "color": {
+      "r": 255,
+      "g": 158,
+      "b": 57
+    },
+    "sound": "assets/snd/player_shoot.ogg"
+  },
+  "enemy": {
+    "size": {
+      "w": 0.5,
+      "h": 2
+    },
+    "velocity": {
+      "x": 0,
+      "y": 50
+    },
+    "color": {
+      "r": 255,
+      "g": 158,
+      "b": 57
+    }
+  }
+}
