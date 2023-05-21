@@ -20,17 +20,17 @@ def system_bullet_state(
         bullet_rect = surface.area.copy()
         bullet_rect.topleft = transform.pos.copy()
         if bullet_state.state == BulletStates.FIRING:
-            if velocity.vel.xy == (0, 0) and follow_entity.tag == "player":
-                ServiceLocator.sounds_services.play_once(
-                    bullet_config[follow_entity.tag]["sound"]
+            if velocity.vel.xy == (0, 0) and bullet_state.tag == "player":
+                ServiceLocator.sounds_service.play_once(
+                    bullet_config[bullet_state.tag]["sound"]
                 )
 
             if world.has_component(_, CFollowEntity):
                 world.remove_component(_, CFollowEntity)
 
-            velocity.vel = follow_entity.velocity.copy()
+            velocity.vel = bullet_state.velocity.copy()
             if not screen_rect.contains(bullet_rect):
-                if follow_entity.tag == "enemy":
+                if bullet_state.tag == "enemy":
                     world.delete_entity(_)
                 else:
                     bullet_state.state = BulletStates.IDLE

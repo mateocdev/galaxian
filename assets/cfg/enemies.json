@@ -6,38 +6,16 @@
   "enemy_01": {
     "image": "assets/img/invaders_enemy_01.png",
     "animations": {
-      "number_frames": 4,
+      "number_frames": 5,
       "list": [
         {
-          "name": "idle",
+          "name": "IDLE",
           "start": 0,
-          "end": 3,
+          "end": 4,
           "framerate": 3
         },
         {
-          "name": "hit",
-          "start": 0,
-          "end": 0,
-          "framerate": 1
-        }
-      ]
-    },
-    "score_value": 10,
-    "score_value_after_hit": 20
-  },
-  "enemy_02": {
-    "image": "assets/img/invaders_enemy_02.png",
-    "animations": {
-      "number_frames": 4,
-      "list": [
-        {
-          "name": "idle",
-          "start": 0,
-          "end": 3,
-          "framerate": 3
-        },
-        {
-          "name": "hit",
+          "name": "HIT",
           "start": 0,
           "end": 0,
           "framerate": 1
@@ -47,19 +25,41 @@
     "score_value": 30,
     "score_value_after_hit": 60
   },
-  "enemy_03": {
-    "image": "assets/img/invaders_enemy_03.png",
+  "enemy_02": {
+    "image": "assets/img/invaders_enemy_02.png",
     "animations": {
-      "number_frames": 4,
+      "number_frames": 5,
       "list": [
         {
-          "name": "idle",
+          "name": "IDLE",
           "start": 0,
-          "end": 3,
+          "end": 4,
           "framerate": 3
         },
         {
-          "name": "hit",
+          "name": "HIT",
+          "start": 0,
+          "end": 0,
+          "framerate": 1
+        }
+      ]
+    },
+    "score_value": 40,
+    "score_value_after_hit": 80
+  },
+  "enemy_03": {
+    "image": "assets/img/invaders_enemy_03.png",
+    "animations": {
+      "number_frames": 5,
+      "list": [
+        {
+          "name": "IDLE",
+          "start": 0,
+          "end": 4,
+          "framerate": 3
+        },
+        {
+          "name": "HIT",
           "start": 0,
           "end": 0,
           "framerate": 1
@@ -72,24 +72,24 @@
   "enemy_04": {
     "image": "assets/img/invaders_enemy_04.png",
     "animations": {
-      "number_frames": 4,
+      "number_frames": 1,
       "list": [
         {
-          "name": "idle",
+          "name": "IDLE",
           "start": 0,
-          "end": 3,
+          "end": 0,
           "framerate": 3
         },
         {
-          "name": "hit",
+          "name": "HIT",
           "start": 0,
           "end": 0,
           "framerate": 1
         }
       ]
     },
-    "score_value": 100,
-    "score_value_after_hit": 200
+    "score_value": 60,
+    "score_value_after_hit": 800
   },
   "launch_sound": "assets/snd/enemy_launch.ogg"
 }

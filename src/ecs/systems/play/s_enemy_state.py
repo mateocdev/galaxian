@@ -27,7 +27,7 @@ def system_enemy_state(
         _calculate_bullet_generation(world, c_st, c_tr, c_s, player_tr, player_st)
         if c_st.state == EnemyStates.IDLE:
             _do_enemy_idle(c_st, c_tr, c_v, c_a, player_st, lvl_mgr)
-        elif c_st.state == EnemyStates.ATTACK:
+        elif c_st.state == EnemyStates.HIT:
             _do_enemy_attack(c_st, c_tr, c_v, player_tr, delta_time)
         elif c_st.state == EnemyStates.BACK_TO_FOLD:
             _do_enemy_back_to_fold(c_st, c_tr, c_v, c_a, delta_time, lvl_mgr)
@@ -45,14 +45,14 @@ def _calculate_bullet_generation(
         return
     rnd = c_st.rng.randint(0, 2000)
     max_rdn = c_st.fire_chance
-    if c_st.state == EnemyStates.ATTACK:
+    if c_st.state == EnemyStates.HIT:
         max_rdn = c_st.fire_chance_attack
     if rnd > max_rdn:
         pos = c_tr.pos.copy()
         pos.x += 5
         pos.y += 5
         vel_x = 0
-        if c_st.state == EnemyStates.ATTACK:
+        if c_st.state == EnemyStates.HIT:
             vel_x = abs(player_tr.pos.x - pos.x)
             vel_x = min(5, vel_x)
             vel_x *= math.copysign(vel_x, player_tr.pos.x - pos.x)
@@ -82,7 +82,7 @@ def _do_enemy_idle(
         c_st.attack_channel = ServiceLocator.sounds_service.play_once(
             enemies_cfg["launch_sound"]
         )
-        c_st.state = EnemyStates.ATTACK
+        c_st.state = EnemyStates.HIT
 
 
 def _do_enemy_attack(

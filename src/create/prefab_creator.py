@@ -123,7 +123,7 @@ def create_bullet(world: esper.World,
     vel = vel.normalize() * bullet_info["velocity"]
 
     bullet_entity = create_sprite(world, pos, vel, bullet_surface)
-    ServiceLocator.sounds_services.play(bullet_info["sound"])
+    ServiceLocator.sounds_service.play(bullet_info["sound"])
     world.add_component(bullet_entity, CTagBullet())
 
 
@@ -136,7 +136,7 @@ def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_info: di
     world.add_component(explosion_entity, CTagExplosion())
     world.add_component(explosion_entity,
                         CAnimation(explosion_info["animations"]))
-    ServiceLocator.sounds_services.play(explosion_info["sound"])
+    ServiceLocator.sounds_service.play(explosion_info["sound"])
     return explosion_entity """
 
 
