@@ -23,6 +23,7 @@ from src.engine.scenes.scene import Scene
 from src.engine.service_locator import ServiceLocator
 from src.engine.services.globals_service import DebugViewMode
 
+
 class ScenePlay(Scene):
     def do_create(self):
         # CONFIGURAR ESTADO GLOBAL
@@ -30,10 +31,16 @@ class ScenePlay(Scene):
             ServiceLocator.globals_service.player_score = 0
         ServiceLocator.globals_service.from_play = False
         ServiceLocator.globals_service.current_level = 1
-        
+
         # ENTIDADES
         world_creator.create_starfield(self.ecs_world)
-        self.pl_entity, self.pl_tr, self.pl_v, self.pl_tg, self.pl_st = play_creator.create_player(self.ecs_world)
+        (
+            self.pl_entity,
+            self.pl_tr,
+            self.pl_v,
+            self.pl_tg,
+            self.pl_st,
+        ) = play_creator.create_player(self.ecs_world)
         bullet_st = play_creator.create_player_bullet(self.ecs_world, self.pl_entity)
 
         # INTERFAZ
@@ -42,22 +49,22 @@ class ScenePlay(Scene):
         interface_creator.create_interface_level_counter(self.ecs_world)
         paused_s, paused_blk = interface_creator.create_paused_text(self.ecs_world)
         ready_ent = interface_creator.create_ready_text(self.ecs_world)
-        
+
         # ESTADO DE ESCENA
         c_lvl_st = self.ecs_world.create_entity()
-        self.c_lvl_mgr = CPlayLevelManager(bullet_st, 
-                                           paused_s,
-                                           paused_blk,
-                                           ready_ent,
-                                           self.pl_entity)
+        self.c_lvl_mgr = CPlayLevelManager(
+            bullet_st, paused_s, paused_blk, ready_ent, self.pl_entity
+        )
         self.ecs_world.add_component(c_lvl_st, self.c_lvl_mgr)
-        
+
         # ACCIONES
         general_creator.create_action(self.ecs_world, "LEFT", pygame.K_LEFT)
         general_creator.create_action(self.ecs_world, "RIGHT", pygame.K_RIGHT)
         general_creator.create_action(self.ecs_world, "FIRE_NORMAL", pygame.K_z)
         general_creator.create_action(self.ecs_world, "PAUSE", pygame.K_p)
-        general_creator.create_action(self.ecs_world, "SWITCH_DEBUG_MODE", pygame.K_LCTRL)
+        general_creator.create_action(
+            self.ecs_world, "SWITCH_DEBUG_MODE", pygame.K_LCTRL
+        )
 
         # MUSIC DE INTRO
         self.level_cfg = ServiceLocator.configs_service.get("assets/cfg/level_01.json")
@@ -69,19 +76,23 @@ class ScenePlay(Scene):
             system_movement(self.ecs_world, delta_time)
             system_follow_entity(self.ecs_world)
             system_enemy_movement(self.ecs_world, delta_time)
-            system_enemy_state(self.ecs_world, self.c_lvl_mgr, self.pl_tr, self.pl_st, delta_time)
+            system_enemy_state(
+                self.ecs_world, self.c_lvl_mgr, self.pl_tr, self.pl_st, delta_time
+            )
             system_player_movement(self.ecs_world)
-            system_bullet_state(self.ecs_world, self.pl_entity, self.game_engine.screen.get_rect())
+            system_bullet_state(
+                self.ecs_world, self.pl_entity, self.game_engine.screen.get_rect()
+            )
             system_collision_bullet(self.ecs_world, self.c_lvl_mgr)
             system_collision_player(self.ecs_world, self.c_lvl_mgr)
             system_animation(self.ecs_world, delta_time)
-        
+
         system_starfield(self.ecs_world, delta_time)
         system_player_state(self.ecs_world, self.c_lvl_mgr, delta_time)
         system_explosion_kill(self.ecs_world)
         system_interface_tracker(self.ecs_world)
         system_blink(self.ecs_world, delta_time)
-    
+
     def do_action(self, action: CInputCommand) -> None:
         if action.name == "LEFT":
             if action.phase == CommandPhase.START:
@@ -102,7 +113,9 @@ class ScenePlay(Scene):
             self.c_lvl_mgr.paused_s.visible = is_paused
             self.c_lvl_mgr.paused_blk.enabled = is_paused
             if is_paused:
-                ServiceLocator.sounds_service.play_once(self.level_cfg["pause_game_sound"])                
+                ServiceLocator.sounds_service.play_once(
+                    self.level_cfg["pause_game_sound"]
+                )
 
         if action.name == "FIRE_NORMAL" and action.phase == CommandPhase.START:
             if self.c_lvl_mgr.state == PlayLevelState.GAME_OVER:
@@ -110,21 +123,16 @@ class ScenePlay(Scene):
                 self.switch_scene("MENU_SCENE")
             elif self.c_lvl_mgr.state == PlayLevelState.PLAY:
                 self._do_fire_normal_action()
-        
+
         if action.name == "SWITCH_DEBUG_MODE" and action.phase == CommandPhase.START:
             if ServiceLocator.globals_service.debug_view == DebugViewMode.NONE:
                 ServiceLocator.globals_service.debug_view = DebugViewMode.RECTS
-            
+
             elif ServiceLocator.globals_service.debug_view == DebugViewMode.RECTS:
                 ServiceLocator.globals_service.debug_view = DebugViewMode.ENEMIES
-            
+
             elif ServiceLocator.globals_service.debug_view == DebugViewMode.ENEMIES:
                 ServiceLocator.globals_service.debug_view = DebugViewMode.NONE
-            print(ServiceLocator.globals_service.debug_view)
-
-        # if action.name == "FIRE_SPECIAL" and action.phase == CommandPhase.END:
-        #     pass
 
     def _do_fire_normal_action(self):
         self.c_lvl_mgr.bullet_st.state = BulletStates.FIRING
-            

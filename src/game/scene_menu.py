@@ -15,18 +15,21 @@ from src.ecs.systems.s_starfield import system_starfield
 from src.create import interface_creator, menu_creator, world_creator
 from src.engine.service_locator import ServiceLocator
 
+
 class SceneMenu(Scene):
-    def do_create(self): 
+    def do_create(self):
         ServiceLocator.globals_service.player_score = 0
 
         world_creator.create_starfield(self.ecs_world)
-        menu_creator.create_press_start_game_text(self.ecs_world)
-        menu_creator.create_title_logo(self.ecs_world)
+        menu_creator.create_press_start_text(self.ecs_world)
+        menu_creator.create_title(self.ecs_world)
         interface_creator.create_menu_interface(self.ecs_world, True)
-        
+
         # CREAR ACCIONES  DE ESCENA
         start_game_action = self.ecs_world.create_entity()
-        self.ecs_world.add_component(start_game_action, CInputCommand("START", pygame.K_z))
+        self.ecs_world.add_component(
+            start_game_action, CInputCommand("START", pygame.K_z)
+        )
 
     def do_action(self, action: CInputCommand) -> None:
         if action.name == "START" and action.phase == CommandPhase.START:

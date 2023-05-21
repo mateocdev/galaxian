@@ -49,8 +49,6 @@ from src.game.scene_play import ScenePlay
 
 class GameEngine:
     def __init__(self) -> None:
-        # self._load_config_files()
-
         with open("assets/cfg/window.json", encoding="utf-8") as window_file:
             self._window_cfg = json.load(window_file)
 
