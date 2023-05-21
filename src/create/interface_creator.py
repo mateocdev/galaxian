@@ -15,7 +15,7 @@ from src.engine.service_locator import ServiceLocator
 
 
 def create_menu_interface(world: esper.World, use_prefab: bool) -> None:
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     v_card_cfg = interface_config["vertical_card"]
     title_text_color = pygame.color.Color(
         interface_config["title_text_color"]["r"],
@@ -61,9 +61,9 @@ def create_menu_interface(world: esper.World, use_prefab: bool) -> None:
 
 
 def create_interface_live(world: esper.World):
-    player_config = ServiceLocator.config_services.get("assets/cfg/player.json")
+    player_config = ServiceLocator.configs_service.get("assets/cfg/player.json")
     lives = player_config["lives"]
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     interface_lives_config = interface_config["lives"]
     lives_surface = ServiceLocator.images_services.get(interface_lives_config["image"])
     for i in range(lives):
@@ -77,7 +77,7 @@ def create_interface_live(world: esper.World):
 
 
 def create_interface_counter_level(world: esper.World):
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     text_counter_color = pygame.color.Color(
         interface_config["normal_text_color"]["r"],
         interface_config["normal_text_color"]["g"],
@@ -112,7 +112,7 @@ def add_v_card_component(
 
 
 def create_pause_text(world: esper.World) -> tuple[CSurface, CBlink]:
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     color = pygame.Color(
         interface_config["title_text_color"]["r"],
         interface_config["title_text_color"]["g"],
@@ -134,7 +134,7 @@ def create_pause_text(world: esper.World) -> tuple[CSurface, CBlink]:
 
 
 def create_win_text(world: esper.World) -> tuple[CSurface, CBlink]:
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     color = pygame.Color(
         interface_config["normal_text_color"]["r"],
         interface_config["normal_text_color"]["g"],
@@ -164,7 +164,7 @@ def create_win_text(world: esper.World) -> tuple[CSurface, CBlink]:
 
 
 def create_game_start_text(world: esper.World) -> int:
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     color = pygame.Color(
         interface_config["normal_text_color"]["r"],
         interface_config["normal_text_color"]["g"],
@@ -181,7 +181,7 @@ def create_game_start_text(world: esper.World) -> int:
 
 
 def create_game_over(world: esper.World):
-    interface_config = ServiceLocator.config_services.get("assets/cfg/interface.json")
+    interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     color = pygame.Color(
         interface_config["normal_text_color"]["r"],
         interface_config["normal_text_color"]["g"],

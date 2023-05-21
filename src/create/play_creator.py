@@ -16,43 +16,43 @@ from src.engine.service_locator import ServiceLocator
 
 
 def create_player(world: esper.World):
-    player_config = ServiceLocator.config_services.get("assets/cfg/player.json")
-    surface = ServiceLocator.images_services.get(player_config["image"])
+    player_config = ServiceLocator.configs_service.get("assets/cfg/player.json")
+    surface = ServiceLocator.images_service.get(player_config["image"])
     pos = pygame.Vector2(
         player_config["spawn_point"]["x"], player_config["spawn_point"]["y"]
     )
     vel = pygame.Vector2(0, 0)
-    player = create_sprite(world, pos, vel, surface)
-    world.add_component(player, CTagPlayer(player_config["input_speed"]))
-    world.add_component(player, CPlayerState(player_config["lives"]))
-    player_tr = world.component_for_entity(player, CTransform)
-    player_v = world.component_for_entity(player, CVelocity)
-    player_tag = world.component_for_entity(player, CTagPlayer)
-    player_state = world.component_for_entity(player, CPlayerState)
-    return player, player_tr, player_v, player_tag, player_state
+    player_entity = create_sprite(world, pos, vel, surface)
+    world.add_component(player_entity, CTagPlayer(player_config["input_speed"]))
+    world.add_component(player_entity, CPlayerState(player_config["lives"]))
+    player_tr = world.component_for_entity(player_entity, CTransform)
+    player_v = world.component_for_entity(player_entity, CVelocity)
+    player_tag = world.component_for_entity(player_entity, CTagPlayer)
+    player_state = world.component_for_entity(player_entity, CPlayerState)
+    return (player_entity, player_tr, player_v, player_tag, player_state)
 
 
 def create_all_enemies(world: esper.World):
-    enemies_config = ServiceLocator.config_services.get("assets/cfg/enemies.json")
-    level_config = ServiceLocator.config_services.get("assets/cfg/level_01.json")
+    level_cfg = ServiceLocator.configs_service.get("assets/cfg/level_01.json")
+    enemies_cfg = ServiceLocator.configs_service.get("assets/cfg/enemies.json")
+    sep_y = 13
     fleet_entity = world.create_entity()
-    world.add_component(fleet_entity, CEnemyFleet(1, level_config["enemy_speed"]["x"]))
-    enemy_04_config = enemies_config["enemy_04"]
-    enemy_03_config = enemies_config["enemy_03"]
-    enemy_02_config = enemies_config["enemy_02"]
-    enemy_01_config = enemies_config["enemy_01"]
-    global_speed = pygame.Vector(0, 0)
+    world.add_component(fleet_entity, CEnemyFleet(1, level_cfg["enemy_speed"]["x"]))
 
-    start_pos = pygame.Vector2(
-        enemy_04_config["spawn_point"]["x"], enemy_04_config["spawn_point"]["y"]
-    )
-    score_value = enemy_04_config["score_value"]
-    score_value_attack = enemy_04_config["score_value_attack"]
-    image = enemy_04_config["image"]
-    animations = enemy_04_config["animations"]
+    enemy_a_config = enemies_cfg["enemy_04"]
+    enemy_b_config = enemies_cfg["enemy_03"]
+    enemy_c_config = enemies_cfg["enemy_02"]
+    enemy_d_config = enemies_cfg["enemy_01"]
+    global_speed = pygame.Vector2(0, 0)
+
+    start_pos: pygame.Vector2 = pygame.Vector2(94, 39)
+    score_value = enemy_a_config["score_value"]
+    score_value_attack = enemy_a_config["score_value_attack"]
+    image = enemy_a_config["image"]
+    animations = enemy_a_config["animations"]
     for x in range(2):
         for y in range(1):
-            pos = pygame.Vector2(start_pos.x + x * 100, start_pos.y + y * 100)
+            pos = pygame.Vector2(start_pos.x + 53 * x, start_pos.y + sep_y * y)
             create_enemy(
                 world,
                 pos,
@@ -63,15 +63,15 @@ def create_all_enemies(world: esper.World):
                 animations,
             )
 
-    start_pos.x = 80
-    start_pos.y = 60
-    score_value = enemy_03_config["score_value"]
-    score_value_attack = enemy_03_config["score_value_attack"]
-    image = enemy_03_config["image"]
-    animations = enemy_03_config["animations"]
+    start_pos.x = 77
+    start_pos.y = 54
+    score_value = enemy_b_config["score_value"]
+    score_value_attack = enemy_b_config["score_value_attack"]
+    image = enemy_b_config["image"]
+    animations = enemy_b_config["animations"]
     for x in range(6):
-        for y in range(2):
-            pos = pygame.Vector2(start_pos.x + x * 100, start_pos.y + y * 100)
+        for y in range(1):
+            pos = pygame.Vector2(start_pos.x + 18 * x, start_pos.y + sep_y * y)
             create_enemy(
                 world,
                 pos,
@@ -82,34 +82,34 @@ def create_all_enemies(world: esper.World):
                 animations,
             )
 
-    start_pos.x = 60
-    start_pos.y = 70
-    score_value = enemy_02_config["score_value"]
-    score_value_attack = enemy_02_config["score_value_attack"]
-    image = enemy_02_config["image"]
-    animations = enemy_02_config["animations"]
+    start_pos.x = 58
+    start_pos.y = 66
+    score_value = enemy_c_config["score_value"]
+    score_value_attack = enemy_c_config["score_value_attack"]
+    image = enemy_c_config["image"]
+    animations = enemy_c_config["animations"]
+    for x in range(8):
+        for y in range(1):
+            pos = pygame.Vector2(start_pos.x + 18 * x, start_pos.y + sep_y * y)
+            create_enemy(
+                world,
+                pos,
+                global_speed,
+                score_value,
+                score_value_attack,
+                image,
+                animations,
+            )
+
+    start_pos.x = 42
+    start_pos.y = 80
+    score_value = enemy_d_config["score_value"]
+    score_value_attack = enemy_d_config["score_value_attack"]
+    image = enemy_d_config["image"]
+    animations = enemy_d_config["animations"]
     for x in range(10):
         for y in range(3):
-            pos = pygame.Vector2(start_pos.x + x * 100, start_pos.y + y * 100)
-            create_enemy(
-                world,
-                pos,
-                global_speed,
-                score_value,
-                score_value_attack,
-                image,
-                animations,
-            )
-
-    start_pos.x = 40
-    start_pos.y = 80
-    score_value = enemy_01_config["score_value"]
-    score_value_attack = enemy_01_config["score_value_attack"]
-    image = enemy_01_config["image"]
-    animations = enemy_01_config["animations"]
-    for x in range(14):
-        for y in range(4):
-            pos = pygame.Vector2(start_pos.x + x * 100, start_pos.y + y * 100)
+            pos = pygame.Vector2(start_pos.x + 18 * x, start_pos.y + sep_y * y)
             create_enemy(
                 world,
                 pos,
@@ -130,70 +130,70 @@ def create_enemy(
     image_path: str,
     animations: dict,
 ) -> None:
-    image = ServiceLocator.images_services.get(image_path)
-    enemy = create_sprite(world, pos, velocity, image)
-    world.add_component(enemy, CTagEnemy(score_value, score_value_attack))
-    world.add_component(enemy, CAnimation(animations))
+    image = ServiceLocator.images_service.get(image_path)
+    enemy_entity = create_sprite(world, pos, velocity, image)
+    world.add_component(enemy_entity, CTagEnemy(score_value, score_value_attack))
+    world.add_component(enemy_entity, CAnimation(animations))
+
     enemy_state = CEnemyState()
     enemy_state.fold_pos = pos.copy()
-    world.add_component(enemy, enemy_state)
+    world.add_component(enemy_entity, enemy_state)
 
 
-def create_bullet_player(world: esper.World, player: int) -> CBulletState:
-    bullet_config = ServiceLocator.config_services.get("assets/cfg/bullets.json")
-    player_bullet_config = bullet_config["player_bullet"]
+def create_bullet_player(world: esper.World, player_entity: int) -> CBulletState:
+    bullet_cfg = ServiceLocator.configs_service.get("assets/cfg/bullets.json")
+    player_bullet_cfg = bullet_cfg["player"]
     size = pygame.Vector2(
-        player_bullet_config["size"]["x"], player_bullet_config["size"]["y"]
+        player_bullet_cfg["size"]["w"], player_bullet_cfg["size"]["h"]
     )
     vel = pygame.Vector2(0, 0)
     pos = pygame.Vector2(0, 0)
     color = pygame.Color(
-        player_bullet_config["color"]["r"],
-        player_bullet_config["color"]["g"],
-        player_bullet_config["color"]["b"],
+        player_bullet_cfg["color"]["r"],
+        player_bullet_cfg["color"]["g"],
+        player_bullet_cfg["color"]["b"],
     )
-    bullet = create_square(world, pos, vel, size, color)
-    world.add_component(bullet, CTransform(pygame.Vector2(0, 0)))
-    world.add_component(bullet, CFollowEntity(player, pygame.Vector2(0, -1)))
+    player_bullet_entity = create_square(world, size, pos, vel, color)
+    world.add_component(player_bullet_entity, CTransform(pygame.Vector2()))
+    world.add_component(
+        player_bullet_entity, CFollowEntity(player_entity, pygame.Vector2(7, -2))
+    )
     speed = pygame.Vector2(
-        player_bullet_config["speed"]["x"], player_bullet_config["speed"]["y"]
+        player_bullet_cfg["velocity"]["x"], player_bullet_cfg["velocity"]["y"]
     )
-    bullet_state = CBulletState("player", speed)
-    world.add_component(bullet, bullet_state)
-    return bullet_state
-
-
-def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_type: str):
-    explosion_config = ServiceLocator.config_services.get("assets/cfg/explosions.json")
-    explosion_info = explosion_config[explosion_type]
-    explosion_surface = ServiceLocator.images_services.get(explosion_info["image"])
-    vel = pygame.Vector2(0, 0)
-
-    explosion = create_sprite(world, pos, vel, explosion_surface)
-    world.add_component(explosion, CTagExplosion())
-    world.add_component(explosion, CAnimation(explosion_info["animations"]))
-    ServiceLocator.audio_services.play_sound(explosion_info["sound"])
-    return explosion
+    c_bullet_state = CBulletState("player", speed)
+    world.add_component(player_bullet_entity, c_bullet_state)
+    return c_bullet_state
 
 
 def create_bullet_enemy(world: esper.World, pos: pygame.Vector2, vel_x: float):
-    bullet_config = ServiceLocator.config_services.get("assets/cfg/bullets.json")
-    enemy_bullet_config = bullet_config["enemy_bullet"]
-    size = pygame.Vector2(
-        enemy_bullet_config["size"]["w"], enemy_bullet_config["size"]["h"]
-    )
+    bullet_cfg = ServiceLocator.configs_service.get("assets/cfg/bullets.json")
+    enemy_bullet_cfg = bullet_cfg["enemy"]
+    size = pygame.Vector2(enemy_bullet_cfg["size"]["w"], enemy_bullet_cfg["size"]["h"])
     vel = pygame.Vector2(0, 0)
     color = pygame.Color(
-        enemy_bullet_config["color"]["r"],
-        enemy_bullet_config["color"]["g"],
-        enemy_bullet_config["color"]["b"],
+        enemy_bullet_cfg["color"]["r"],
+        enemy_bullet_cfg["color"]["g"],
+        enemy_bullet_cfg["color"]["b"],
     )
-    bullet = create_square(world, pos, vel, size, color)
+    enemy_bullet_entity = create_square(world, size, pos, vel, color)
     speed = pygame.Vector2(
-        enemy_bullet_config["velocity"]["x"] + vel_x,
-        enemy_bullet_config["velocity"]["y"],
+        enemy_bullet_cfg["velocity"]["x"] + vel_x, enemy_bullet_cfg["velocity"]["y"]
     )
-    bullet_s = CBulletState("enemy", speed)
-    bullet_s.state = BulletStates.FIRING
-    world.add_component(bullet, bullet_s)
-    return bullet_s
+    c_bullet_state = CBulletState("enemy", speed)
+    c_bullet_state.state = BulletStates.FIRING
+    world.add_component(enemy_bullet_entity, c_bullet_state)
+    return c_bullet_state
+
+
+def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_type: str):
+    explosion_cfg = ServiceLocator.configs_service.get("assets/cfg/explosions.json")
+    explosion_info = explosion_cfg[explosion_type]
+    explosion_surface = ServiceLocator.images_service.get(explosion_info["image"])
+    vel = pygame.Vector2(0, 0)
+
+    explosion_entity = create_sprite(world, pos, vel, explosion_surface)
+    world.add_component(explosion_entity, CTagExplosion())
+    world.add_component(explosion_entity, CAnimation(explosion_info["animations"]))
+    ServiceLocator.sounds_service.play_once(explosion_info["sound"])
+    return explosion_entity

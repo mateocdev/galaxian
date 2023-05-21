@@ -10,4 +10,4 @@ class ServiceLocator:
     sounds_service: SoundsService = SoundsService()
     fonts_service: FontsService = FontsService()
     globals_service: GlobalsService = GlobalsService()
-    config_services: ConfigsService = ConfigsService()
+    configs_service: ConfigsService = ConfigsService()
