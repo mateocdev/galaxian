@@ -1,7 +1,7 @@
 import math
 
 import esper
-from src.create.play_creator import create_enemy_bullet
+from src.create.play_creator import create_bullet_enemy
 from src.ecs.components.c_animation import CAnimation, set_animation
 
 from src.ecs.components.c_enemy_state import CEnemyState, EnemyStates
@@ -56,7 +56,7 @@ def _calculate_bullet_generation(
             vel_x = abs(player_tr.pos.x - pos.x)
             vel_x = min(5, vel_x)
             vel_x *= math.copysign(vel_x, player_tr.pos.x - pos.x)
-        create_enemy_bullet(world, pos, vel_x)
+        create_bullet_enemy(world, pos, vel_x)
 
 
 def _do_enemy_idle(

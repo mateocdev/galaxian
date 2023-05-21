@@ -3,7 +3,7 @@ import esper
 from src.ecs.components.c_play_level_manager import CPlayLevelManager, PlayLevelState
 from src.ecs.components.tags.c_tag_enemy import CTagEnemy
 from src.create.interface_creator import create_win_text
-from src.create.play_creator import create_all_enemies, create_player_bullet
+from src.create.play_creator import create_all_enemies, create_bullet_player
 from src.engine.service_locator import ServiceLocator
 
 

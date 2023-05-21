@@ -5,8 +5,8 @@ from src.ecs.components.c_surface import CSurface
 from src.ecs.components.c_transform import CTransform
 from src.engine.service_locator import ServiceLocator
 
-from src.create.interface_creator import create_game_over_text
-from src.create.play_creator import create_player_bullet
+from src.create.interface_creator import create_game_over
+from src.create.play_creator import create_bullet_player
 
 
 def system_player_state(
@@ -28,7 +28,7 @@ def system_player_state(
                     c_st.curr_dead_time = 0
                     c_s.visible = True
                     c_st.state = PlayerStates.ALIVE
-                    c_lvl_mgr.bullet_st = create_player_bullet(world, pl_ent)
+                    c_lvl_mgr.bullet_st = create_bullet_player(world, pl_ent)
                 else:
                     if c_lvl_mgr.state != PlayLevelState.GAME_OVER:
                         level_cfg = ServiceLocator.configs_service.get(
