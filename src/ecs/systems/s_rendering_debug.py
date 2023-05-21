@@ -1,6 +1,6 @@
 import esper
 import pygame
-from src.create.general_creator import TextAlignment
+from src.create.prefab_creator import TextAlignment
 
 from src.ecs.components.c_changing_text import CChangingText
 from src.ecs.components.c_enemy_state import CEnemyState

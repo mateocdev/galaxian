@@ -1,6 +1,6 @@
 import pygame
 import esper
-from src.create.general_creator import create_sprite, create_square
+from src.create.prefab_creator import create_sprite, create_square
 from src.ecs.components.c_animation import CAnimation
 from src.ecs.components.c_bullet_state import BulletStates, CBulletState
 from src.ecs.components.c_enemy_fleet import CEnemyFleet

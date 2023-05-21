@@ -1,6 +1,6 @@
 import pygame
 
-from src.create import general_creator, interface_creator, play_creator, world_creator
+from src.create import prefab_creator, interface_creator, play_creator, world_creator
 from src.ecs.components.c_bullet_state import BulletStates, CBulletState
 from src.ecs.components.c_input_command import CInputCommand, CommandPhase
 from src.ecs.components.c_play_level_manager import CPlayLevelManager, PlayLevelState
@@ -58,11 +58,11 @@ class ScenePlay(Scene):
         self.ecs_world.add_component(c_lvl_st, self.c_lvl_mgr)
 
         # ACCIONES
-        general_creator.create_action(self.ecs_world, "LEFT", pygame.K_LEFT)
-        general_creator.create_action(self.ecs_world, "RIGHT", pygame.K_RIGHT)
-        general_creator.create_action(self.ecs_world, "FIRE_NORMAL", pygame.K_z)
-        general_creator.create_action(self.ecs_world, "PAUSE", pygame.K_p)
-        general_creator.create_action(
+        prefab_creator.create_action(self.ecs_world, "LEFT", pygame.K_LEFT)
+        prefab_creator.create_action(self.ecs_world, "RIGHT", pygame.K_RIGHT)
+        prefab_creator.create_action(self.ecs_world, "FIRE_NORMAL", pygame.K_z)
+        prefab_creator.create_action(self.ecs_world, "PAUSE", pygame.K_p)
+        prefab_creator.create_action(
             self.ecs_world, "SWITCH_DEBUG_MODE", pygame.K_LCTRL
         )
 

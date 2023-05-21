@@ -18,27 +18,30 @@ from src.engine.service_locator import ServiceLocator
 from src.ecs.components.c_changing_text import CChangingText, TextAlignment
 
 
-def create_square(world: esper.World, size: pygame.Vector2,
-                  pos: pygame.Vector2, vel: pygame.Vector2, col: pygame.Color) -> int:
+def create_square(
+    world: esper.World,
+    size: pygame.Vector2,
+    pos: pygame.Vector2,
+    vel: pygame.Vector2,
+    col: pygame.Color,
+) -> int:
     cuad_entity = world.create_entity()
-    world.add_component(cuad_entity,
-                        CSurface(size, col))
-    world.add_component(cuad_entity,
-                        CTransform(pos))
-    world.add_component(cuad_entity,
-                        CVelocity(vel))
+    world.add_component(cuad_entity, CSurface(size, col))
+    world.add_component(cuad_entity, CTransform(pos))
+    world.add_component(cuad_entity, CVelocity(vel))
     return cuad_entity
 
 
-def create_sprite(world: esper.World, pos: pygame.Vector2, vel: pygame.Vector2,
-                  surface: pygame.Surface) -> int:
+def create_sprite(
+    world: esper.World,
+    pos: pygame.Vector2,
+    vel: pygame.Vector2,
+    surface: pygame.Surface,
+) -> int:
     sprite_entity = world.create_entity()
-    world.add_component(sprite_entity,
-                        CTransform(pos))
-    world.add_component(sprite_entity,
-                        CVelocity(vel))
-    world.add_component(sprite_entity,
-                        CSurface.from_surface(surface))
+    world.add_component(sprite_entity, CTransform(pos))
+    world.add_component(sprite_entity, CVelocity(vel))
+    world.add_component(sprite_entity, CSurface.from_surface(surface))
     return sprite_entity
 
 
@@ -137,26 +140,27 @@ def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_info: di
     return explosion_entity """
 
 
-def create_text(world: esper.World, txt: str, size: int, color: pygame.Color,
-                pos: pygame.Vector2, alignment: TextAlignment, text_changes: bool) -> int:
-    font = ServiceLocator.fonts_services.get(
-        "./assets/fnt/PressStart2P.ttf", size)
+def create_text(
+    world: esper.World,
+    txt: str,
+    size: int,
+    color: pygame.Color,
+    pos: pygame.Vector2,
+    alignment: TextAlignment,
+    text_changes: bool,
+) -> int:
+    font = ServiceLocator.fonts_service.get("./assets/fnt/PressStart2P.ttf", size)
     text_entity = world.create_entity()
-    world.add_component(text_entity,
-                        CSurface.from_text(txt, font, color))
+    world.add_component(text_entity, CSurface.from_text(txt, font, color))
     txt_s = world.component_for_entity(text_entity, CSurface)
     origin = pygame.Vector2(0, 0)
-    if alignment is TextAlignment.CENTER:
-        origin.x = pygame.Vector2(txt_s.surface.get_width() / 2,
-                                  txt_s.surface.get_height() / 2)
-    elif alignment is TextAlignment.RIGHT:
-        origin.x = pygame.Vector2(txt_s.surface.get_width(),
-                                  txt_s.surface.get_height())
-    world.add_component(text_entity,
-                        CTransform(pos, origin))
+    if alignment is TextAlignment.RIGHT:
+        origin.x -= txt_s.area.right
+    elif alignment is TextAlignment.CENTER:
+        origin.x -= txt_s.area.centerx
+    world.add_component(text_entity, CTransform(pos + origin))
     if text_changes:
-        world.add_component(text_entity,
-                            CChangingText(txt, font, alignment, color))
+        world.add_component(text_entity, CChangingText(txt, font, alignment, color))
     return text_entity
 
 

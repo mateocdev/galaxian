@@ -3,7 +3,7 @@ import pygame
 import esper
 
 
-from src.create.general_creator import TextAlignment, create_sprite, create_text
+from src.create.prefab_creator import TextAlignment, create_sprite, create_text
 from src.ecs.components.c_blink import CBlink
 from src.ecs.components.c_surface import CSurface
 from src.ecs.components.c_velocity import CVelocity
