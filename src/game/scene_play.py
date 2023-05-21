@@ -26,13 +26,11 @@ from src.engine.services.globals_service import DebugViewMode
 
 class ScenePlay(Scene):
     def do_create(self):
-        # CONFIGURAR ESTADO GLOBAL
         if ServiceLocator.globals_service.from_play:
             ServiceLocator.globals_service.player_score = 0
         ServiceLocator.globals_service.from_play = False
         ServiceLocator.globals_service.current_level = 1
 
-        # ENTIDADES
         world_creator.create_starfield(self.ecs_world)
         (
             self.pl_entity,
@@ -41,23 +39,20 @@ class ScenePlay(Scene):
             self.pl_tg,
             self.pl_st,
         ) = play_creator.create_player(self.ecs_world)
-        bullet_st = play_creator.create_player_bullet(self.ecs_world, self.pl_entity)
+        bullet_st = play_creator.create_bullet_player(self.ecs_world, self.pl_entity)
 
-        # INTERFAZ
         interface_creator.create_menu_interface(self.ecs_world, False)
-        interface_creator.create_interface_lives(self.ecs_world)
-        interface_creator.create_interface_level_counter(self.ecs_world)
-        paused_s, paused_blk = interface_creator.create_paused_text(self.ecs_world)
-        ready_ent = interface_creator.create_ready_text(self.ecs_world)
+        interface_creator.create_interface_live(self.ecs_world)
+        interface_creator.create_interface_counter_level(self.ecs_world)
+        paused_s, paused_blk = interface_creator.create_pause_text(self.ecs_world)
+        ready_ent = interface_creator.create_game_start_text(self.ecs_world)
 
-        # ESTADO DE ESCENA
         c_lvl_st = self.ecs_world.create_entity()
         self.c_lvl_mgr = CPlayLevelManager(
             bullet_st, paused_s, paused_blk, ready_ent, self.pl_entity
         )
         self.ecs_world.add_component(c_lvl_st, self.c_lvl_mgr)
 
-        # ACCIONES
         prefab_creator.create_action(self.ecs_world, "LEFT", pygame.K_LEFT)
         prefab_creator.create_action(self.ecs_world, "RIGHT", pygame.K_RIGHT)
         prefab_creator.create_action(self.ecs_world, "FIRE_NORMAL", pygame.K_z)
@@ -66,7 +61,6 @@ class ScenePlay(Scene):
             self.ecs_world, "SWITCH_DEBUG_MODE", pygame.K_LCTRL
         )
 
-        # MUSIC DE INTRO
         self.level_cfg = ServiceLocator.configs_service.get("assets/cfg/level_01.json")
         ServiceLocator.sounds_service.play_once(self.level_cfg["start_game_sound"])
 

@@ -65,7 +65,7 @@ def create_interface_live(world: esper.World):
     lives = player_config["lives"]
     interface_config = ServiceLocator.configs_service.get("assets/cfg/interface.json")
     interface_lives_config = interface_config["lives"]
-    lives_surface = ServiceLocator.images_services.get(interface_lives_config["image"])
+    lives_surface = ServiceLocator.images_service.get(interface_lives_config["image"])
     for i in range(lives):
         pos = pygame.Vector2(
             interface_lives_config["pos"]["x"] + i * interface_lives_config["pos"]["y"]
@@ -83,7 +83,7 @@ def create_interface_counter_level(world: esper.World):
         interface_config["normal_text_color"]["g"],
         interface_config["normal_text_color"]["b"],
     )
-    flag_surface = ServiceLocator.images_services.get(
+    flag_surface = ServiceLocator.images_service.get(
         interface_config["level_flag"]["image"]
     )
     flag_pos = pygame.Vector2(

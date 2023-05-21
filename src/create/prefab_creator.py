@@ -46,7 +46,7 @@ def create_sprite(
 
 
 """ def create_enemy_square(world: esper.World, pos: pygame.Vector2, enemy_info: dict):
-    enemy_surface = ServiceLocator.images_services.get(enemy_info["image"])
+    enemy_surface = ServiceLocator.images_service.get(enemy_info["image"])
     vel_max = enemy_info["velocity_max"]
     vel_min = enemy_info["velocity_min"]
     vel_range = random.randrange(vel_min, vel_max)
@@ -57,7 +57,7 @@ def create_sprite(
 
 
 def create_enemy_hunter(world: esper.World, pos: pygame.Vector2, enemy_info: dict):
-    enemy_surface = ServiceLocator.images_services.get(enemy_info["image"])
+    enemy_surface = ServiceLocator.images_service.get(enemy_info["image"])
     enemy_surface = pygame.transform.rotate(enemy_surface, 180)
     velocity = pygame.Vector2(0, 0)
     enemy_entity = create_sprite(world, pos, velocity, enemy_surface)
@@ -68,7 +68,7 @@ def create_enemy_hunter(world: esper.World, pos: pygame.Vector2, enemy_info: dic
 
 
 def create_player_square(world: esper.World, player_info: dict, player_lvl_info: dict) -> int:
-    player_sprite = ServiceLocator.images_services.get(player_info["image"])
+    player_sprite = ServiceLocator.images_service.get(player_info["image"])
     size = player_sprite.get_size()
     # size = (size[0] / player_info["animations"]["number_frames"], size[1])
     pos = pygame.Vector2(player_lvl_info["position"]["x"] - (size[0] / 2),
@@ -114,7 +114,7 @@ def create_bullet(world: esper.World,
                   player_pos: pygame.Vector2,
                   player_size: pygame.Vector2,
                   bullet_info: dict):
-    bullet_surface = ServiceLocator.images_services.get(bullet_info["image"])
+    bullet_surface = ServiceLocator.images_service.get(bullet_info["image"])
 
     bullet_size = bullet_surface.get_rect().size
     pos = pygame.Vector2(player_pos.x + (player_size[0] / 2) - (bullet_size[0] / 2),
@@ -128,7 +128,7 @@ def create_bullet(world: esper.World,
 
 
 def create_explosion(world: esper.World, pos: pygame.Vector2, explosion_info: dict):
-    explosion_surface = ServiceLocator.images_services.get(
+    explosion_surface = ServiceLocator.images_service.get(
         explosion_info["image"])
     vel = pygame.Vector2(0, 0)
 
@@ -160,7 +160,7 @@ def create_text(
         origin.x -= txt_s.area.centerx
     world.add_component(text_entity, CTransform(pos + origin))
     if text_changes:
-        world.add_component(text_entity, CChangingText(txt, font, alignment, color))
+        world.add_component(text_entity, CChangingText(txt, font, alignment))
     return text_entity
 
 

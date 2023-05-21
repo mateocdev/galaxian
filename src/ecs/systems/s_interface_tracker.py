@@ -26,7 +26,10 @@ def system_interface_tracker(world: esper.World):
         if not c_tag.high_score:
             c_chg.text = f"{ServiceLocator.globals_service.player_score:02d}"
         else:
-            if ServiceLocator.globals_service.player_score > ServiceLocator.globals_service.player_high_score:
+            if (
+                ServiceLocator.globals_service.player_score
+                > ServiceLocator.globals_service.player_high_score
+            ):
                 c_chg.text = f"{ServiceLocator.globals_service.player_score:02d}"
             else:
                 c_chg.text = f"{ServiceLocator.globals_service.player_high_score:02d}"
