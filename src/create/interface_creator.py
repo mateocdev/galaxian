@@ -22,14 +22,27 @@ def create_menu_interface(world: esper.World, use_prefab: bool) -> None:
         interface_config["title_text_color"]["g"],
         interface_config["title_text_color"]["b"],
     )
+    normal_text_color = pygame.color.Color(interface_config["normal_text_color"]["r"],
+                                           interface_config["normal_text_color"]["g"],
+                                           interface_config["normal_text_color"]["b"])
+    high_score_color = pygame.color.Color(interface_config["high_score_color"]["r"],
+                                          interface_config["high_score_color"]["g"],
+                                          interface_config["high_score_color"]["b"])
     title_text_size = interface_config["title_text_size"]
 
-    lives_txt = create_text(
+    player_score = f"{ServiceLocator.globals_service.player_score:02d}"
+    if ServiceLocator.globals_service.player_high_score > int(interface_config["high_score_max_value"]):
+        high_score_max_value = str(ServiceLocator.globals_service.player_high_score)
+    else:
+        high_score_max_value = str(interface_config["high_score_max_value"])
+    ServiceLocator.globals_service.player_high_score = int(high_score_max_value)
+
+    score_txt = create_text(
         world,
-        "LIVES",
+        "SCORE",
         title_text_size,
         title_text_color,
-        pygame.Vector2(40, 20),
+        pygame.Vector2(34, 18),
         TextAlignment.LEFT,
         False,
     )
@@ -38,15 +51,37 @@ def create_menu_interface(world: esper.World, use_prefab: bool) -> None:
         "HIGH SCORE",
         title_text_size,
         title_text_color,
-        pygame.Vector2(80, 18),
+        pygame.Vector2(94, 18),
         TextAlignment.LEFT,
         False,
     )
 
+    score_label_max = create_text(
+        world,
+        high_score_max_value,
+        title_text_size,
+        high_score_color,
+        pygame.Vector2(148, 28),
+        TextAlignment.RIGHT,
+        True,
+        )
+    world.add_component(score_label_max, CTagScore(True))
+    
+    score_value_player = create_text(
+        world,
+        player_score,
+        title_text_size,
+        normal_text_color,
+        pygame.Vector2(72, 28),
+        TextAlignment.RIGHT,
+        True,
+    )
+    world.add_component(score_value_player, CTagScore(False))
+
     if use_prefab:
         add_v_card_component(
             world,
-            lives_txt,
+            score_txt,
             title_text_size,
             v_card_cfg["v_speed"],
             v_card_cfg["v_offset"],
@@ -55,6 +90,21 @@ def create_menu_interface(world: esper.World, use_prefab: bool) -> None:
             world,
             high_score_txt,
             title_text_size,
+            v_card_cfg["v_speed"],
+            v_card_cfg["v_offset"],
+        )
+        add_v_card_component(
+            world,
+            score_label_max,
+            25,
+            v_card_cfg["v_speed"],
+            v_card_cfg["v_offset"],
+        )
+
+        add_v_card_component(
+            world,
+            score_value_player,
+            25,
             v_card_cfg["v_speed"],
             v_card_cfg["v_offset"],
         )
@@ -96,10 +146,10 @@ def create_interface_counter_level(world: esper.World):
         interface_config["level_flag"]["pos"]["x"],
         interface_config["level_flag"]["pos"]["y"],
     )
-    flag_txt_pos.x += 30
-    flag_txt_pos.y += 5
+    flag_txt_pos.x += 28
+    flag_txt_pos.y += 6
     level_text = create_text(
-        world, "1", 10, text_counter_color, flag_txt_pos, TextAlignment.RIGHT, True
+        world, "1", 8, text_counter_color, flag_txt_pos, TextAlignment.RIGHT, True
     )
     world.add_component(level_text, CTagLevelCounter())
 
@@ -193,4 +243,4 @@ def create_game_over(world: esper.World):
     )
     size = interface_config["game_over"]["size"]
     get_text = interface_config["game_over"]["text"]
-    text = create_text(world, get_text, size, color, pos, TextAlignment.CENTER, False)
+    create_text(world, get_text, size, color, pos, TextAlignment.CENTER, False)
