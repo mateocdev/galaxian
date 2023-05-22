@@ -1,18 +1,93 @@
 {
-    "title_text_color": {
-        "r": 255,
-        "g": 0,
-        "b": 0
+  "title_text_size": 8,
+  "interface_blink_rate": 0.5,
+  "press_start": {
+    "text": "PRESS Z TO START",
+    "pos": {
+      "x": 128,
+      "y": 160
     },
-    "normal_text_color": {
-        "r": 255,
-        "g": 255,
-        "b": 255
+    "size": 8
+  },
+  "game_start": {
+    "text": "GAME START",
+    "pos": {
+      "x": 128,
+      "y": 144
     },
-    "high_score_color": {
-        "r": 30,
-        "g": 144,
-        "b": 255
+    "size": 8
+  },
+  "win_text": {
+    "text": "YOU WIN!",
+    "pos": {
+      "x": 128,
+      "y": 120
     },
-    "high_score_max_value": 1000
+    "size": 8
+  },
+  "next_lext": {
+    "text": "NEXT LEVEL",
+    "pos": {
+      "x": 128,
+      "y": 160
+    },
+    "size": 8
+  },
+  "game_over": {
+    "text": "GAME OVER",
+    "pos": {
+      "x": 128,
+      "y": 120
+    },
+    "size": 8
+  },
+  "pause_text": {
+    "text": "PAUSE",
+    "pos": {
+      "x": 128,
+      "y": 120
+    },
+    "size": 8
+  },
+  "title_text_color": {
+    "r": 255,
+    "g": 0,
+    "b": 0
+  },
+  "normal_text_color": {
+    "r": 255,
+    "g": 255,
+    "b": 255
+  },
+  "high_score_color": {
+    "r": 30,
+    "g": 144,
+    "b": 255
+  },
+  "high_score_max_value": 5000,
+  "logo": {
+    "image": "./assets/img/invaders_logo_title.png",
+    "pos": {
+      "x": 128,
+      "y": 60
+    }
+  },
+  "vertical_card": {
+    "v_speed": -50,
+    "v_offset": 240
+  },
+  "lives": {
+    "pos": {
+      "x": 160,
+      "y": 26
+    },
+    "image": "assets/img/invaders_life.png"
+  },
+  "level_flag": {
+    "pos": {
+      "x": 192,
+      "y": 22
+    },
+    "image": "assets/img/invaders_level_flag.png"
+  }
 }
