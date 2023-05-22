@@ -38,4 +38,4 @@ def system_player_state(
                             level_cfg["game_over_sound"]
                         )
                         c_lvl_mgr.state = PlayLevelState.GAME_OVER
-                        create_game_over_text(world)
+                        create_game_over(world)
