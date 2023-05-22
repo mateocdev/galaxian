@@ -118,7 +118,7 @@ def create_interface_live(world: esper.World):
     lives_surface = ServiceLocator.images_service.get(interface_lives_config["image"])
     for i in range(lives):
         pos = pygame.Vector2(
-            interface_lives_config["pos"]["x"] + i * interface_lives_config["pos"]["y"]
+            interface_lives_config["pos"]["x"],interface_lives_config["pos"]["y"]
         )
         pos.x += i * lives_surface.get_rect().w
         vel = pygame.Vector2(0, 0)

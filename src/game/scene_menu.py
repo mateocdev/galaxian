@@ -24,8 +24,6 @@ class SceneMenu(Scene):
         menu_creator.create_press_start_text(self.ecs_world)
         menu_creator.create_title(self.ecs_world)
         interface_creator.create_menu_interface(self.ecs_world, True)
-
-        # CREAR ACCIONES  DE ESCENA
         start_game_action = self.ecs_world.create_entity()
         self.ecs_world.add_component(
             start_game_action, CInputCommand("START", pygame.K_z)

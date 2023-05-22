@@ -17,7 +17,6 @@ def system_screen_bounce(world: esper.World, screen: pygame.Surface):
     c_v: CVelocity
     c_s: CSurface
     for enemy_entity, (c_t, c_v, c_s, c_e) in components:
-        # Hunters don't bounce
         if c_e.enemy_type == "Hunter":
             continue
 
