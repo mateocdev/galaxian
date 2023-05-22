@@ -209,7 +209,7 @@ def create_win_text(world: esper.World) -> tuple[CSurface, CBlink]:
     )
     size = interface_config["next_level"]["size"]
     get_text = interface_config["next_level"]["text"]
-    text_2 = create_text(world, get_text, size, color, pos, TextAlignment.CENTER, False)
+    text_2 = create_text(world, get_text, size, color, pos, TextAlignment.RIGHT, False)
     return win, text_2
 
 

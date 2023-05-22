@@ -14,9 +14,9 @@ def system_bullet_state(
 ):
     bullet_config = ServiceLocator.configs_service.get("assets/cfg/bullets.json")
     query = world.get_components(
-        CBulletState, CTransform, CVelocity, CSurface, CFollowEntity
+        CBulletState, CTransform, CVelocity, CSurface
     )
-    for _, (bullet_state, transform, velocity, surface, follow_entity) in query:
+    for ent, (bullet_state, transform, velocity, surface) in query:
         bullet_rect = surface.area.copy()
         bullet_rect.topleft = transform.pos.copy()
         if bullet_state.state == BulletStates.FIRING:
@@ -25,15 +25,15 @@ def system_bullet_state(
                     bullet_config[bullet_state.tag]["sound"]
                 )
 
-            if world.has_component(_, CFollowEntity):
-                world.remove_component(_, CFollowEntity)
+            if world.has_component(ent, CFollowEntity):
+                world.remove_component(ent, CFollowEntity)
 
             velocity.vel = bullet_state.velocity.copy()
             if not screen_rect.contains(bullet_rect):
                 if bullet_state.tag == "enemy":
-                    world.delete_entity(_)
+                    world.delete_entity(ent)
                 else:
                     bullet_state.state = BulletStates.IDLE
         elif bullet_state.state == BulletStates.IDLE:
             velocity.vel.xy = (0, 0)
-            world.add_component(_, CFollowEntity(player_entity, pygame.Vector2(7, -2)))
+            world.add_component(ent, CFollowEntity(player_entity, pygame.Vector2(7, -2)))
